@@ -1,0 +1,54 @@
+@startuml HomeScreen Class Diagram
+
+package Pages{
+    package HomeScreen{
+        class HomeScreen{
+            - _homeScreenVM : HomeScreenVM
+            # initState(): void
+            # dispose(): void
+            + showPopUpForCreate(int index): Future<void>
+            + showUserForEdit(): Future<void> 
+        }
+        class HomeScreenVM{
+            + fetchAllAvengers(): Future<void> 
+            + navigateToPreviousScreen(): void 
+            + getUserInput(): void 
+            + onClickCreateAvenger(String nameOfAvenger): Future<void> 
+            + onClickDeleteAvenger(required int index): Future<void> 
+            + onClickEditAvenger(int index,String name): Future<void> 
+            + editDisplay(int index):  Future<void> 
+            + showPop():  Future<void> 
+        }
+        class HomeScreenModel{
+            + avengerServiceInstance: IAvengerService
+            + @text:String
+            + @isLoading: bool
+            + @index: int
+            + @allAvengers: list<String>
+            + @errorText: String 
+        }
+    }
+}
+package BOs{
+    package AvengerBO{
+        class AvengerBO{
+            + id: int
+            + name: String
+        }
+    }
+}
+package Services{
+    package AvengerService{
+       abstract class IAvengerService{
+            + getAllAvengers(): Future<ServiceResult<List<AvengerBO>>>
+            + createAvenger(AvengerBO hero): Future<ServiceResult<AvengerBO>>
+            + editAvenger(AvengerBO hero): Future<ServiceResult<List<AvengerBO>>>
+            + deleteAvenger(AvengerBO hero): Future<ServiceResult<List<AvengerBO>>> 
+        }
+    }
+}
+HomeScreen --> HomeScreenVM: uses
+HomeScreenVM --> HomeScreenModel: extends
+HomeScreenVM --> AvengerBO: uses
+HomeScreenVM --> IAvengerService: uses
+@enduml

@@ -1,0 +1,24 @@
+@startuml AppConstants Class Diagram
+package Helpers{
+    package AppConstants{
+        class AppConstants{
+        + avengerServiceBaseUrl: String
+        + avengerServiceGetAllAvengerEndPoint: String
+        + avengerServiceCreateNewHeroEndPoint: String
+        + avengerServiceEditHeroEndPoint: String
+    }
+    }
+}
+package Services{
+    package AvengerServices{
+       abstract class IAvengerServices{
+            + getAllAvengers(): Future<ServiceResult<List<AvengerBO>>>
+            + createAvenger(AvengerBO hero): Future<ServiceResult<AvengerBO>>
+            + editAvenger(AvengerBO hero): Future<ServiceResult<List<AvengerBO>>>
+            + deleteAvenger(AvengerBO hero): Future<ServiceResult<List<AvengerBO>>> 
+        }
+    }
+
+}
+IAvengerServices --> AppConstants: uses
+@enduml

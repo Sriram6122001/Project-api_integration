@@ -48,9 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
           // Check whether the event.data is showPopUpCreate
           case "showUserPopUp":{
-
+            
+            _textEditingController.text="";
             // Call the method showUserPopUp
-            showUserPopUp();
+            showPopUpForCreate();
 
             // break the statement
             break;
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _textEditingController.text=_homeScreenVM.allAvengers[event.data[0]].name!;
 
             /* call the method showNewPopUp and pass the value clickedInded by using the instance to the named paramter named index */
-            showNewPopUp(index:event.data[0]);
+            showPopUpForEdit(index:event.data[0]);
 
             // break the statement
             break;
@@ -113,7 +114,7 @@ void dispose()
 }
 
 /* Create a Future method of type void with the name showUserPopUp  */
-Future<void> showUserPopUp()async
+Future<void> showPopUpForCreate()async
 {
   await showDialog(
     context: context,
@@ -145,7 +146,7 @@ Future<void> showUserPopUp()async
            ElevatedButton(onPressed: (){
             
             //Using the instance _homeScreenVM call the method createANewAvenger and the _textEditingController.text to the parameter nameOfAvenger.
-            _homeScreenVM.createANewAvenger(nameOfAvenger: _textEditingController.text.toString());
+            _homeScreenVM.onClickCreateAvenger(nameOfAvenger: _textEditingController.text.toString());
 
             //Using the instance _homeScreenVM call the method fetchAllAvengers()
             _homeScreenVM.fetchAllAvengers();
@@ -157,7 +158,7 @@ Future<void> showUserPopUp()async
 }
 
 
-Future<void> showNewPopUp({required int index})async
+Future<void> showPopUpForEdit({required int index})async
 {
   await showDialog(
     context: context,
@@ -171,6 +172,7 @@ Future<void> showNewPopUp({required int index})async
           width:100,
         child: TextFormField(
           controller: _textEditingController,
+          onChanged: (text)=>_homeScreenVM.onChange(text: text),
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.person),
             constraints: BoxConstraints(maxHeight: 50,maxWidth: 100)
@@ -187,7 +189,7 @@ Future<void> showNewPopUp({required int index})async
           ElevatedButton(onPressed: (){
 
             //Using the instance _homeScreenVM call the method editAvenger and pass the parameter index as index and _textEditingController.text to the parameter name.
-            _homeScreenVM.editAvenger(index: index,name:_textEditingController.text);
+            _homeScreenVM.onClickEditAvenger(index: index,name:_textEditingController.text);
           },
           child: Text("save",style: GoogleFonts.arima())),
           
@@ -254,7 +256,7 @@ Future<void> showNewPopUp({required int index})async
                             IconButton(onPressed:(){
                               
                               // Using the instance _homeScreen call the method deleteAvenger and pass the index as index.
-                              _homeScreenVM.deleteAvenger(index: index);}, icon:Icon(Icons.delete),color:Colors.redAccent)
+                              _homeScreenVM.onClickDeleteAvenger(index: index);}, icon:Icon(Icons.delete),color:Colors.redAccent)
                         ]),
                       ),
                     );

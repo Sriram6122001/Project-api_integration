@@ -1,0 +1,146 @@
+@startuml AvengerServices Sequence Diagram 
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+Title createNewAvenger()
+autonumber
+Hide footbox
+alt try
+Caller -> Services: Invokes createNewAvenger()
+activate Caller
+activate Services
+Services -> Services: Serialize the data "nameOfHero" and assign it to a variable datatoBeSent
+Services -> Services: Invoke _dio.post and assign it to variable responseFromServer
+alt (responseFromServer.statusCode==201)
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.OK and message as "Sucessfully Created new hero" and content as deserialize data from responseFromServer
+else 
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.BadRequest and message as "Error in the creation of new hero"
+end
+else #efbbbb on SocketException
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.NetworkFailure and message as "There is not internet connection!"
+else #efbbbb Catch 
+Services -> Utilities: Invokes writeException()
+activate Utilities
+Utilities --> Services: Writes the exception
+deactivate Utilities
+Services --> Caller:  Return ServiceResult and assign the statuscode as HttpStatusCode.SystemException and message as exception.
+deactivate Caller
+deactivate Services
+end
+
+newpage deleteAvenger
+Hide footbox
+autonumber 
+alt try
+Caller -> Services: Invokes deleteAvenger()
+activate Caller
+activate Services
+Services -> Services: Invoke _dio.delete and assign it to variable responseFromServer
+alt (responseFromServer.statusCode==200)
+Services -> Services: Assign the data from responseFromServer to a variable content
+Services -> Services: Create a List 
+alt (content is List)
+alt for(var element in content)
+Services -> Services: Deserialize the data and assign it to a variable named instance.
+alt (instance!- null)
+Services -> Services: Add the instance to the List
+end
+end
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.OK and message as "Delete data Successfully"
+end
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.Conflict and message as "Data has been got" and content as empty
+end
+else #efbbbb on FormatException
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.Forbidden and message as "The type of data got is incorrect!"
+else #efbbbb on SocketException
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.NetworkFailure and message as "There is not internet connection!" and content as empty
+else #efbbbb Catch 
+Services -> Utilities: Invokes writeException()
+activate Utilities
+Utilities --> Services: Writes the exception
+deactivate Utilities
+Services --> Caller:  Return ServiceResult and assign the statuscode as HttpStatusCode.SystemException and message as exception.
+deactivate Caller
+deactivate Services
+end
+
+newpage editAvenger
+Hide footbox
+autonumber 
+alt try
+Caller -> Services: Invokes editAvenger()
+activate Caller
+activate Services
+Services -> Services: Serialize the data "hero" and assign it to a variable dataSent
+Services -> Services: Invoke _dio.put and assign it to variable responseFromServer
+alt (responseFromServer.statusCode==200)
+Services -> Services: Assign the data from responseFromServer to a variable content
+Services -> Services: Create a List 
+alt (content is List)
+alt for(var element in content)
+Services -> Services: Deserialize the data and assign it to a variable named instance.
+alt (instance!- null)
+Services -> Services: Add the instance to the List
+end
+end
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.OK and message as "Delete edited Successfully"
+end
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.Conflict and message as "Data has been got" and content as empty
+end
+else #efbbbb on FormatException
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.Forbidden and message as "The type of data got is incorrect!"
+else #efbbbb on SocketException
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.NetworkFailure and message as "There is not internet connection!" and content as empty
+else #efbbbb Catch 
+Services -> Utilities: Invokes writeException()
+activate Utilities
+Utilities --> Services: Writes the exception
+deactivate Utilities
+Services --> Caller:  Return ServiceResult and assign the statuscode as HttpStatusCode.SystemException and message as exception.
+deactivate Caller
+deactivate Services
+end
+
+newpage fetchAvengers
+Hide footbox
+autonumber 
+alt try
+Caller -> Services: Invokes getAllAvenger()
+activate Caller
+activate Services
+Services -> Services: Invoke _dio.put and assign it to variable responseFromServer.
+alt (responseFromServer.statusCode==200)
+Services -> Services: Assign the data from responseFromServer to a variable content
+Services -> Services: Create a List 
+alt (content is List)
+alt for(var element in content)
+Services -> Services: Deserialize the data and assign it to a variable named instance.
+alt (instance!- null)
+Services -> Services: Add the instance to the List
+end
+end
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.OK and message as "Data got Successfully"
+end
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.Conflict and message as "Data has been got" and content as empty
+end
+else #efbbbb on FormatException
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.Forbidden and message as "The type of data got is incorrect!"
+else #efbbbb on SocketException
+Services --> Caller: Return ServiceResult and assign the statuscode as HttpStatusCode.NetworkFailure and message as "There is not internet connection!" and content as empty
+else #efbbbb Catch 
+Services -> Utilities: Invokes writeException()
+activate Utilities
+Utilities --> Services: Writes the exception
+deactivate Utilities
+Services --> Caller:  Return ServiceResult and assign the statuscode as HttpStatusCode.SystemException and message as exception.
+deactivate Caller
+deactivate Services
+end
+@enduml

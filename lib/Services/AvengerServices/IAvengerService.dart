@@ -1,5 +1,5 @@
 
-import 'package:api_integration/BO/AvengerBO/AvengerBO.dart';
+import 'package:api_integration/BOs/AvengerBO/AvengerBO.dart';
 import 'package:api_integration/Helpers/APIHandlerHelper/APIHandlerHelper.dart';
 
 abstract class IAvengerService {
@@ -10,9 +10,9 @@ abstract class IAvengerService {
   Future<ServiceResult<AvengerBO>> createNewAvenger({required AvengerBO nameOfHero});
 
   /* Create a method to edit/change name of an hero */
-  Future<ServiceResult<List<AvengerBO>>> editNameOfAvenger({required AvengerBO hero});
+  Future<ServiceResult<List<AvengerBO>>> editAvenger({required AvengerBO hero});
 
   /* Create a method to delete hero from the avengers */
-  Future<ServiceResult<List<AvengerBO>>> deleteHeroFromAvenger({required AvengerBO hero});
+  Future<ServiceResult<List<AvengerBO>>> deleteAvenger({required AvengerBO hero});
 
 }

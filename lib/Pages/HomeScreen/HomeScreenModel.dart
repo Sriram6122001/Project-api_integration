@@ -1,4 +1,4 @@
-import 'package:api_integration/BO/AvengerBO/AvengerBO.dart';
+import 'package:api_integration/BOs/AvengerBO/AvengerBO.dart';
 import 'package:api_integration/Helpers/Mixins/PopUpMixin.dart';
 import 'package:api_integration/Helpers/Mixins/TextFieldMixin.dart';
 import 'package:api_integration/Services/AvengerServices/IAvengerService.dart';
@@ -43,5 +43,12 @@ abstract class _HomeScreenModelBase with Store {
     allAvengers = newAvengers;
   }
 
+  @observable
+  String errorText = "";
+  @action
+  void setError({required String text})
+  {
+    errorText=text;
+  }
   
 }

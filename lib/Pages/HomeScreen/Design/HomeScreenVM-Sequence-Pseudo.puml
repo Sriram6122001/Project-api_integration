@@ -1,0 +1,171 @@
+@startuml HomeScreenVM Seqeuence Diagram 
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+title Create a New Avenger
+autonumber
+activate Caller
+Hide footbox
+Caller -> HomeScreenVM: Invokes the onClickCreateAvenger()
+activate HomeScreenVM
+alt try
+HomeScreenVM -> HomeScreenVM: Invokes navigateToPreviousScreen()
+HomeScreenVM -> HomeScreenVM: Set the isLoading As true
+HomeScreenVM -> HomeScreenVM: In the instance of the AvengerBO assign the nameOfAvenger for the parameter name and null for id
+HomeScreenVM -> HomeScreenVM: Invokes createNewAvenger()
+HomeScreenVM -> HomeScreenVM: Invokes fetchAllAvengers
+HomeScreenVM --> Caller: Returns
+else #efbbbb catch 
+HomeScreenVM --> Utilities: Invokes writeException()
+activate Utilities
+Utilities --> HomeScreenVM: Returns
+deactivate Utilities
+HomeScreenVM --> Caller: Return the controller
+deactivate HomeScreenVM
+end
+
+newpage Edit Avenger
+autonumber
+Hide footbox
+Caller -> HomeScreenVM: Invokes the onClickEditAvenger()
+activate HomeScreenVM
+alt try
+HomeScreenVM -> HomeScreenVM: Invokes navigateToPreviousScreen()
+HomeScreenVM -> HomeScreenVM: Set the isLoading As true
+HomeScreenVM -> HomeScreenVM: In the instance of the AvengerBO assign name for parameter name and allAvengers[index].id for id
+HomeScreenVM -> HomeScreenVM: Get the ServiceResult of the editAvenger in the IAvengerService and assign the instance of the AvengerBO as parameter.
+HomeScreenVM -> HomeScreenVM: Invokes fetchAllAvengers
+HomeScreenVM --> Caller: Returns
+else #efbbbb catch 
+HomeScreenVM --> Utilities: Invokes writeException()
+activate Utilities
+Utilities --> HomeScreenVM: Returns
+deactivate Utilities
+HomeScreenVM --> Caller: Return the controller
+deactivate HomeScreenVM
+end 
+
+newpage Delete Avenger
+autonumber
+activate Caller
+Hide footbox
+Caller -> HomeScreenVM: Invokes the onClickDeleteAvenger()
+activate HomeScreenVM
+alt try
+HomeScreenVM -> HomeScreenVM: In the instance of the AvengerBO assign null for parameter name and allAvengers[index].id for id
+HomeScreenVM -> HomeScreenVM: Get the ServiceResult of the deleteAvenger in the IAvengerService and assign the instance of the AvengerBO as parameter.
+HomeScreenVM -> HomeScreenVM: Invokes fetchAllAvengers
+HomeScreenVM --> Caller: Returns
+else #efbbbb catch 
+HomeScreenVM --> Utilities: Invokes writeException()
+activate Utilities
+Utilities --> HomeScreenVM: Returns
+deactivate Utilities
+HomeScreenVM --> Caller: Return the controller
+deactivate HomeScreenVM
+end
+
+newpage Fetch Avengers
+autonumber
+activate Caller
+Hide footbox
+Caller -> HomeScreenVM: Invokes the fetchAllAvengers()
+activate HomeScreenVM
+alt try
+HomeScreenVM -> HomeScreenVM: Set isLoading as true
+HomeScreenVM -> HomeScreenVM: Get the ServiceResult of the AvengerServices and assign variable named "data"
+alt data.statuscode == HttpStatusCode.OK
+HomeScreenVM -> HomeScreenVM: Set the content of the data from the ServiceResult to setAllAvengers()
+HomeScreenVM -> HomeScreenVM: Set the empty String to setError()
+HomeScreenVM --> Caller: Returns 
+else #efbbbb
+HomeScreenVM -> HomeScreenVM: Assign the message of the data from the ServiceRsult to the variable errorText.
+HomeScreenVM -> HomeScreenVM: Set the errorText 
+HomeScreenVM --> Caller: Returns
+end
+HomeScreenVM -> HomeScreenVM: Set isLoading as false
+else #efbbbb catch 
+HomeScreenVM --> Utilities: Invokes writeException()
+activate Utilities
+Utilities --> HomeScreenVM: Returns
+deactivate Utilities
+HomeScreenVM --> Caller: Return the controller
+deactivate HomeScreenVM
+end
+
+newpage navigateToPreviousScreen
+autonumber
+activate Caller
+activate HomeScreenVM
+Hide footbox
+HomeScreenVM -> HomeScreenVM: Invokes navigateToPreviousScreen()
+HomeScreenVM -> HomeScreenVM: Add the NavigationPop to the navigationStream
+HomeScreenVM -> Caller: Returns
+deactivate Caller
+deactivate HomeScreenVM
+
+newpage onChange()
+autonumber 
+Hide footbox 
+alt try
+Caller -> HomeScreenVM: Invokes onChange()
+HomeScreenVM -> HomeScreenVM: Assign the parameter to the variable inputText
+HomeScreenVM -> HomeScreenVM: Add the inputText data to the TextStream
+HomeScreenVM --> Caller: Return the Controller
+else #efbbbb catch 
+HomeScreenVM -> Utilities: invokes writeException()
+activate Utilities
+Utilities --> HomeScreenVM: Returns
+deactivate Utilities
+HomeScreenVM --> Caller: Return the Controller
+deactivate HomeScreenVM
+deactivate Caller
+end
+
+newpage showPop()
+autonumber 
+Hide footbox 
+Activate Caller
+Activate HomeScreenVM
+alt try
+Caller -> HomeScreenVM: Invokes onChange()
+HomeScreenVM -> HomeScreenVM: Assign the parameter to the variable inputText
+HomeScreenVM -> HomeScreenVM: Add the inputText data to the TextStream
+HomeScreenVM --> Caller: Return the Controller
+else #efbbbb catch 
+HomeScreenVM -> Utilities: invokes writeException()
+activate Utilities
+Utilities --> HomeScreenVM: Returns
+deactivate Utilities
+HomeScreenVM --> Caller: Return the Controller
+deactivate HomeScreenVM
+deactivate Caller
+end
+
+newpage editDisplay()
+autonumber 
+Hide footbox 
+Activate Caller
+Activate HomeScreenVM
+alt try
+Caller -> HomeScreenVM: Invokes onChange()
+HomeScreenVM -> HomeScreenVM: Assign the parameter to the variable inputText
+HomeScreenVM -> HomeScreenVM: Add the inputText data to the TextStream
+HomeScreenVM --> Caller: Return the Controller
+else #efbbbb catch 
+HomeScreenVM -> Utilities: Invokes writeException()
+activate Utilities
+Utilities --> HomeScreenVM: Returns
+deactivate Utilities
+HomeScreenVM --> Caller: Return the Controller
+deactivate HomeScreenVM
+deactivate Caller
+end
+
+@enduml

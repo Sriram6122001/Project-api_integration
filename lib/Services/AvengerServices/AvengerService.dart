@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:api_integration/Helpers/APIHandlerHelper/APIHandlerHelper.dart';
-import 'package:api_integration/BO/AvengerBO/AvengerBO.dart';
+import 'package:api_integration/BOs/AvengerBO/AvengerBO.dart';
 import 'package:api_integration/Helpers/AppConstants/AppConstants.dart';
 import 'package:api_integration/Helpers/Utitilites/Utilities.dart';
 import 'package:dart_json_mapper/dart_json_mapper.dart';
@@ -111,7 +111,7 @@ class AvengerService implements IAvengerService {
 
   /* Create a method with a name deleteHeroFromAvenger of type Future */
   @override
-  Future<ServiceResult<List<AvengerBO>>> deleteHeroFromAvenger(
+  Future<ServiceResult<List<AvengerBO>>> deleteAvenger(
       {required AvengerBO hero})async {
 
     //try block
@@ -230,7 +230,7 @@ class AvengerService implements IAvengerService {
 
 /* Create a method with a name editNameOfAvenger of type Future */
   @override
-  Future<ServiceResult<List<AvengerBO>>> editNameOfAvenger(
+  Future<ServiceResult<List<AvengerBO>>> editAvenger(
       {required AvengerBO hero})async {
     // Try Block
     try {

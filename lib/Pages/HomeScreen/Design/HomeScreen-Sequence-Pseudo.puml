@@ -1,0 +1,134 @@
+@startuml HomeScreen Sequence Diagram 
+skinparam sequence{
+    ParticipantBackgroundColor #A7BEAE
+    LifeLineBackgroundColor #E7E8D1
+    LifeLineBorderColor #2C5F2D
+    ActorBackgroundColor #FC766AFF
+    ActorBorderColor #FC766AFF
+    ArrowColor #B85042
+    ArrowFontColor #234E70
+}
+
+newpage Create a New Avenger
+autonumber
+Hide footbox
+user -> HomeScreen:  "+".button clicked
+activate user
+activate HomeScreen
+HomeScreen -> HomeScreenVM: Invokes onClickCreateAvenger()
+activate HomeScreenVM
+HomeScreenVM --> HomeScreen: Returns
+deactivate HomeScreenVM
+HomeScreen --> user: Displays the popup.
+deactivate HomeScreen
+deactivate user
+
+newpage Create Avenger - onchanged()
+Hide footbox
+user -> HomeScreen: User enters text on the TextField
+activate user
+activate HomeScreen
+HomeScreen -> HomeScreenVM: Invokes onChanged()
+activate HomeScreenVM
+HomeScreenVM --> HomeScreen: Returns
+deactivate HomeScreenVM
+HomeScreen --> user: Displays the text
+deactivate HomeScreen
+deactivate user
+
+newpage Create Avenger - Save the Text
+Hide footbox
+user ->HomeScreen: "save" button clicked
+activate user
+activate HomeScreen
+HomeScreen -> HomeScreenVM: Invokes createNewAvenger()
+activate HomeScreenVM
+HomeScreenVM --> HomeScreen: Returns
+deactivate HomeScreenVM
+HomeScreen --> user: Displays the Created Avenger
+deactivate HomeScreen
+deactivate user
+
+newpage Create Avenger - Close the popup
+Hide footbox
+user ->HomeScreen: "cancel" button clicked
+activate user
+activate HomeScreen
+HomeScreen -> HomeScreenVM: Invokes navigateToPreviousScreen()
+activate HomeScreenVM
+HomeScreenVM --> HomeScreen: Returns
+deactivate HomeScreenVM
+HomeScreen --> user: Closes the popup and moves to previous Screen
+deactivate HomeScreen
+deactivate user
+
+
+newpage Edit Avenger 
+autonumber
+Hide footbox
+user -> HomeScreen:  "edit".iconbutton clicked
+activate user
+activate HomeScreen
+HomeScreen -> HomeScreenVM: Invokes onClickEditAvenger()
+activate HomeScreenVM
+HomeScreenVM --> HomeScreen: Returns
+deactivate HomeScreenVM
+HomeScreen --> user: Displays the popup
+deactivate HomeScreen
+deactivate user
+
+newpage Edit Avenger - onchanged()
+Hide footbox
+user -> HomeScreen: User enters text on the TextField
+activate user
+activate HomeScreen
+HomeScreen -> HomeScreenVM: Invokes onChanged()
+activate HomeScreenVM
+HomeScreenVM --> HomeScreen: Returns
+deactivate HomeScreenVM
+HomeScreen --> user: Displays the text with the existing Avenger name
+deactivate HomeScreen
+deactivate user
+
+newpage Edit Avenger - Update the Text
+Hide footbox
+user ->HomeScreen: "update" button clicked
+activate user
+activate HomeScreen
+HomeScreen -> HomeScreenVM: Invokes editAvenger()
+activate HomeScreenVM
+HomeScreenVM --> HomeScreen: Returns
+deactivate HomeScreenVM
+HomeScreen --> user: Displays the edited Avenger
+deactivate HomeScreen
+deactivate user
+
+newpage Edit Avenger - Close the Popup
+Hide footbox
+user ->HomeScreen: "Cancel" button clicked
+activate user
+activate HomeScreen
+HomeScreen -> HomeScreenVM: Invokes navigateToPreviousScreen()
+activate HomeScreenVM
+HomeScreenVM --> HomeScreen: Returns
+deactivate HomeScreenVM
+HomeScreen --> user: Closes the popup and moves to previous Screen
+deactivate HomeScreen
+deactivate user
+
+newpage Delete Avenger 
+autonumber
+Hide footbox
+user -> HomeScreen: "delete".iconbutton clicked
+activate user
+activate HomeScreen
+HomeScreen -> HomeScreenVM: Invokes onClickDeleteAvenger()
+activate HomeScreenVM
+HomeScreenVM --> HomeScreen: Returns
+deactivate HomeScreenVM
+HomeScreen --> user: Deletes the Avenger and displays the screen.
+deactivate HomeScreen
+deactivate user
+
+
+@enduml

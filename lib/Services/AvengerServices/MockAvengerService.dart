@@ -1,5 +1,5 @@
 import 'package:api_integration/Helpers/APIHandlerHelper/APIHandlerHelper.dart';
-import 'package:api_integration/BO/AvengerBO/AvengerBO.dart';
+import 'package:api_integration/BOs/AvengerBO/AvengerBO.dart';
 import 'package:api_integration/Services/AvengerServices/IAvengerService.dart';
 
 class MockAvengerService implements IAvengerService {
@@ -11,14 +11,14 @@ class MockAvengerService implements IAvengerService {
   }
 
   @override
-  Future<ServiceResult<List<AvengerBO>>> deleteHeroFromAvenger(
+  Future<ServiceResult<List<AvengerBO>>> deleteAvenger(
       {required AvengerBO hero}) {
     // TODO: implement deleteHeroFromAvenger
     throw UnimplementedError();
   }
 
   @override
-  Future<ServiceResult<List<AvengerBO>>> editNameOfAvenger(
+  Future<ServiceResult<List<AvengerBO>>> editAvenger(
       {required AvengerBO hero}) {
     // TODO: implement editNameOfAvenger
     throw UnimplementedError();
